@@ -1,5 +1,3 @@
-find_package(Qt6 REQUIRED Network)
-
 add_library(geocoding
     geocoding/geocoding.cpp
     geocoding/geocoding.h

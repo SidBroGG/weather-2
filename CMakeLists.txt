@@ -13,5 +13,8 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
 endif()
 
+find_package(Qt6 REQUIRED COMPONENTS Widgets Network Test)
+
 add_subdirectory(src)
 add_subdirectory(libs)
+add_subdirectory(tests)

@@ -1,5 +1,3 @@
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
-
 add_executable(weather-2
     main.cpp
 
