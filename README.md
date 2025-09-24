@@ -30,4 +30,4 @@ cd weather-2
 - [x] City finding
 
 ### Plans for the future
-- [] Get weather forecast
+- [ ] Get weather forecast
