@@ -10,4 +10,8 @@ add_executable(weather-2
     settingsdialog.ui
 )
 
-target_link_libraries(weather-2 PRIVATE Qt6::Widgets)
+target_link_libraries(weather-2 PRIVATE
+    Qt6::Widgets
+    Qt6::Network
+    geocoding
+)
