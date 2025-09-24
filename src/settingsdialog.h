@@ -22,11 +22,13 @@ private slots:
     void on_lineEdit_textEdited(const QString &arg1);
 
 private:
-    Ui::SettingsDialog *ui;
+    void handleGeocodingComplete(const QString &errorString, double lon, double lat);
+    void startGeocoding();
 
-    bool to_update = true;
+    Ui::SettingsDialog *ui;
     Geocoding *geocoding;
     QTimer *timer;
+    QString lastQuery;
 };
 
 #endif // SETTINGSDIALOG_H
