@@ -14,39 +14,26 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 {
     ui->setupUi(this);
 
+    _res_cityName = QString();
+    _res_lat = 0.0;
+    _res_lon = 0.0;
+
     timer->setInterval(1000);
     timer->setSingleShot(true);
 
     connect(timer, &QTimer::timeout, this, &SettingsDialog::startGeocoding);
 
     connect(geocoding, &Geocoding::complete, this, &SettingsDialog::handleGeocodingComplete);
-
-    // connect(geocoding, &Geocoding::complete, this, [this] (const QString &errorString, double lon, double lat) {
-    //     QFont font(ui->successLabel->font());
-    //     font.setItalic(false);
-    //     ui->successLabel->setFont(font);
-
-    //     if (errorString.isEmpty()) {
-    //         ui->successLabel->setText("City found");
-
-    //         QPalette palette;
-    //         palette.setColor(QPalette::WindowText, QColor(Qt::green));
-    //         ui->successLabel->setPalette(palette);
-    //     } else {
-    //         ui->successLabel->setText("City not found");
-
-    //         QPalette palette;
-    //         palette.setColor(QPalette::WindowText, QColor(Qt::red));
-    //         ui->successLabel->setPalette(palette);
-    //     }
-    // });
-
 }
 
 SettingsDialog::~SettingsDialog()
 {
     delete ui;
 }
+
+QString SettingsDialog::res_cityName() const { return _res_cityName; }
+double SettingsDialog::res_lon() const { return _res_lon; }
+double SettingsDialog::res_lat() const { return _res_lat; }
 
 void SettingsDialog::on_lineEdit_textEdited(const QString &arg1)
 {
@@ -73,7 +60,9 @@ void SettingsDialog::startGeocoding()
     geocoding->start(lastQuery);
 }
 
-void SettingsDialog::handleGeocodingComplete(const QString &errorString, double lon, double lat)
+void SettingsDialog::handleGeocodingComplete(
+    const QString &errorString, const QString &cityName, double lon, double lat
+)
 {
     QFont font(ui->successLabel->font());
     font.setItalic(false);
@@ -85,32 +74,20 @@ void SettingsDialog::handleGeocodingComplete(const QString &errorString, double 
         QPalette palette;
         palette.setColor(QPalette::WindowText, QColor(Qt::green));
         ui->successLabel->setPalette(palette);
+
+        _res_cityName = cityName;
+        _res_lat = lat;
+        _res_lon = lon;
     } else {
         ui->successLabel->setText("City not found");
 
         QPalette palette;
         palette.setColor(QPalette::WindowText, QColor(Qt::red));
         ui->successLabel->setPalette(palette);
+
+        _res_cityName = QString();
+        _res_lat = 0.0;
+        _res_lon = 0.0;
     }
 }
-
-// void SettingsDialog::on_lineEdit_textEdited(const QString &arg1)
-// {
-//     if (!to_update) return;
-
-//     to_update = false;
-
-//     QPalette loading_palette;
-//     loading_palette.setColor(QPalette::WindowText, QColor(Qt::black));
-
-//     QFont loading_font(ui->successLabel->font());
-//     loading_font.setItalic(true);
-
-//     ui->successLabel->setText("Loading...");
-//     ui->successLabel->setPalette(loading_palette);
-//     ui->successLabel->setFont(loading_font);
-
-//     geocoding->start(arg1);
-//     timer->start(1000);
-// }
 

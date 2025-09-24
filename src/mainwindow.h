@@ -19,8 +19,16 @@ public:
 
 private slots:
     void on_settingsButton_clicked();
+    void on_settings_updated();
 
 private:
+    void saveSettings();
+    void loadSettings();
+
     Ui::MainWindow *ui;
+
+    QString _cityName;
+    double _lon;
+    double _lat;
 };
 #endif // MAINWINDOW_H

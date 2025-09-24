@@ -20,7 +20,7 @@ private slots:
     void onReply(QNetworkReply *reply);
 
 signals:
-    void complete(const QString &errorString, double lon, double lat);
+    void complete(const QString &errorString, const QString &cityName, double lon, double lat);
 };
 
 #endif

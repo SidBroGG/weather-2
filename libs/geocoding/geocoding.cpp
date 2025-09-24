@@ -29,7 +29,7 @@ void Geocoding::onReply(QNetworkReply *reply) {
     connect(reply, &QNetworkReply::finished, reply, &QNetworkReply::deleteLater);
 
     if (reply->error() != QNetworkReply::NoError) {
-        emit complete(reply->errorString(), 0.0, 0.0);
+        emit complete(reply->errorString(), QString(), 0.0, 0.0);
         return;
     }
 
@@ -39,7 +39,7 @@ void Geocoding::onReply(QNetworkReply *reply) {
     QJsonDocument jsonDoc = QJsonDocument::fromJson(response, &parseError);
 
     if (parseError.error != QJsonParseError::NoError || !jsonDoc.isObject()) {
-        emit complete("Parsing error", 0.0, 0.0);
+        emit complete("Parsing error", QString(), 0.0, 0.0);
         return;
     }
 
@@ -47,7 +47,7 @@ void Geocoding::onReply(QNetworkReply *reply) {
     QJsonArray features = root["features"].toArray();
 
     if (features.isEmpty()) {
-        emit complete("Features is empty", 0.0, 0.0);
+        emit complete("Features is empty", QString(), 0.0, 0.0);
         return;
     }
 
@@ -56,14 +56,17 @@ void Geocoding::onReply(QNetworkReply *reply) {
     QJsonArray coords = geometry["coordinates"].toArray();
 
     if (coords.size() < 2) {
-        emit complete("No coords", 0.0, 0.0);
+        emit complete("No coords", QString(), 0.0, 0.0);
         return;
     }
 
     double lon = coords.at(0).toDouble();
     double lat = coords.at(1).toDouble();
 
-    emit complete(QString(), lon, lat);
+    QJsonObject properties = firstFeature["properties"].toObject();
+    QString cityName = properties["name"].toString() + ", " + properties["country"].toString();
+
+    emit complete(QString(), cityName, lon, lat);
 }
 
 

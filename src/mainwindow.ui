@@ -14,7 +14,7 @@
    <string>Weather 2</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="2,0,0,2,0,1">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="2,0,0,0,2,0,1">
     <item>
      <spacer name="verticalSpacer_3">
       <property name="orientation">
@@ -53,6 +53,22 @@
       </property>
       <property name="text">
        <string>Snowy</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="cityLabel">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>Skibidi, Toilet</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignmentFlag::AlignCenter</set>
