@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QFont>
 #include <QPalette>
+#include <QPushButton>
 
 SettingsDialog::SettingsDialog(QWidget *parent)
     : QDialog(parent)
@@ -41,6 +42,11 @@ void SettingsDialog::on_lineEdit_textEdited(const QString &arg1)
 
     lastQuery = arg1;
 
+    QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
+    if (okButton) {
+        okButton->setEnabled(false);
+    }
+
     timer->stop();
     timer->start();
 }
@@ -67,6 +73,11 @@ void SettingsDialog::handleGeocodingComplete(
     QFont font(ui->successLabel->font());
     font.setItalic(false);
     ui->successLabel->setFont(font);
+
+    QPushButton *okButton = ui->buttonBox->button(QDialogButtonBox::Ok);
+    if (okButton) {
+        okButton->setEnabled(true);
+    }
 
     if (errorString.isEmpty()) {
         ui->successLabel->setText("City found");

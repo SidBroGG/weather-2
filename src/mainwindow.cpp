@@ -4,6 +4,7 @@
 #include "settingsdialog.h"
 
 #include <QSettings>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -32,7 +33,7 @@ void MainWindow::on_settingsButton_clicked()
     }
 }
 
-void MainWindow::on_settings_updated()
+void MainWindow::settings_updated()
 {
     if (_cityName.isEmpty()) {
         ui->cityLabel->setText("Select a city");
@@ -45,25 +46,27 @@ void MainWindow::saveSettings()
 {
     QSettings settings("sidbro", "weather-2");
 
-    settings.beginGroup("general");
+    settings.beginGroup("General");
     settings.setValue("cityName", _cityName);
     settings.setValue("lon", _lon);
     settings.setValue("lat", _lat);
     settings.endGroup();
 
-    emit on_settings_updated();
+    settings_updated();
 }
 
 void MainWindow::loadSettings()
 {
     QSettings settings("sidbro", "weather-2");
 
-    settings.beginGroup("general");
+    qDebug() << "Loading settings from" << settings.fileName();
+
+    settings.beginGroup("General");
     _cityName = settings.value("cityName", QString()).toString();
     _lon = settings.value("lon", 0.0).toDouble();
     _lat = settings.value("lat", 0.0).toDouble();
     settings.endGroup();
 
-    emit on_settings_updated();
+    settings_updated();
 }
 

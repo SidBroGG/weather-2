@@ -19,7 +19,7 @@ public:
 
 private slots:
     void on_settingsButton_clicked();
-    void on_settings_updated();
+    void settings_updated();
 
 private:
     void saveSettings();
