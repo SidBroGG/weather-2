@@ -1,19 +1,24 @@
-add_executable(test_geocoding
-    test_geocoding.cpp
-)
+function(add_qt_test name)
+    add_executable(${name} ${name}.cpp)
 
-target_link_libraries(test_geocoding
-    PRIVATE
-        Qt6::Core
-        Qt6::Test
-        Qt6::Network
-        geocoding
-)
+    target_link_libraries(${name}
+        PRIVATE
+            Qt6::Core
+            Qt6::Test
+            Qt6::Network
+            ${ARGN}
+    )
 
-target_include_directories(test_geocoding
-    PUBLIC
-        ${CMAKE_SOURCE_DIR}/libs
-)
+    target_include_directories(${name}
+        PUBLIC
+            ${CMAKE_SOURCE_DIR}/libs
+    )
+
+    add_test(NAME ${name} COMMAND ${name})
+endfunction()
 
 enable_testing()
-add_test(NAME test_geocoding COMMAND test_geocoding)
+
+add_qt_test(test_geocoding geocoding)
+add_qt_test(test_weather   weather)
+

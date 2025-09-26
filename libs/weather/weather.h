@@ -18,9 +18,11 @@ private slots:
     void onReply(QNetworkReply *reply);
 
 signals:
-    void complete(double temp, const QString &desc);
+    void complete(const QString &errorString, double temp, const QString &desc);
 
 private:
+    QString weatherDesc(int code);
+
     QNetworkAccessManager _manager;
 };
 

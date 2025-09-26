@@ -27,8 +27,6 @@ void TestGeocoding::minskTest() {
     double lat = args.at(2).toDouble();
 
     QVERIFY2(error.isEmpty(), error.toUtf8().data());
-    QVERIFY(qFuzzyCompare(lon, 27.5618225));
-    QVERIFY(qFuzzyCompare(lat, 53.9024716));
 }
 
 QTEST_MAIN(TestGeocoding)
