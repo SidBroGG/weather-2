@@ -1,6 +1,5 @@
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
-#include "geocoding.h"
 
 #include <QTimer>
 #include <QFont>

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "weather/weather.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,12 +21,17 @@ public:
 private slots:
     void on_settingsButton_clicked();
     void settings_updated();
+    void weather_updated(const QString &errorString, double temp, const QString &desc);
+
+    void on_updateButton_clicked();
 
 private:
     void saveSettings();
     void loadSettings();
 
     Ui::MainWindow *ui;
+
+    Weather *_weather;
 
     QString _cityName;
     double _lon;

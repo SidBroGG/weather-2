@@ -9,8 +9,11 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , _weather(new Weather(this))
 {
     ui->setupUi(this);
+
+    connect(_weather, &Weather::complete, this, &MainWindow::weather_updated);
 
     loadSettings();
 }
@@ -42,6 +45,20 @@ void MainWindow::settings_updated()
     }
 }
 
+void MainWindow::weather_updated(const QString &errorString, double temp, const QString &desc)
+{
+    ui->updateButton->setEnabled(true);
+
+    if (!errorString.isEmpty()) {
+        ui->temperatureLabel->setText("1488 °C");
+        ui->descriptionLabel->setText("Error: " + errorString);
+        return;
+    }
+
+    ui->temperatureLabel->setText(QString::number(temp) + " °C");
+    ui->descriptionLabel->setText(desc);
+}
+
 void MainWindow::saveSettings()
 {
     QSettings settings("sidbro", "weather-2");
@@ -69,4 +86,17 @@ void MainWindow::loadSettings()
 
     settings_updated();
 }
+
+
+void MainWindow::on_updateButton_clicked()
+{
+    ui->updateButton->setEnabled(false);
+
+    ui->temperatureLabel->setText("Updating...");
+    ui->descriptionLabel->setText("Updating...");
+
+    _weather->start(_lon, _lat);
+}
+
+
 

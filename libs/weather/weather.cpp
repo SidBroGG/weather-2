@@ -54,7 +54,7 @@ void Weather::onReply(QNetworkReply *reply)
         return;
     }
 
-    double temp = current["temperature_2m"].isDouble();
+    double temp = current["temperature_2m"].toDouble();
 
     int weather_code = current["weather_code"].toInt();
     QString desc = weatherDesc(weather_code);

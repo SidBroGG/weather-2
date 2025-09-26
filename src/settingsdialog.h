@@ -1,7 +1,7 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#include "geocoding.h"
+#include "geocoding/geocoding.h"
 
 #include <QTimer>
 #include <QDialog>
