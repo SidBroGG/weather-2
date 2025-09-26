@@ -28,6 +28,7 @@ cd weather-2
 ### What was made
 - [x] UI
 - [x] City finding
+- [x] Get weather forecast
 
 ### Plans for the future
-- [ ] Get weather forecast
+- [ ] idk
